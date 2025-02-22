@@ -15,3 +15,7 @@ element2.addEventListener("click",function () {
     element2.textContent="Погляньте в консоль"
 })
 
+element2.addEventListener("mouseout",function () {
+    element2.textContent="Натисніть кнопку"
+})
+
