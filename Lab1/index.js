@@ -11,7 +11,7 @@ title.addEventListener("mouseout",function () {
 let element2 = document.querySelector("button");
 
 element2.addEventListener("click",function () {
-    console.log("Якимів Данило")
+    console.warn("Якимів Данило")
     element2.textContent="Погляньте в консоль"
 })
 
