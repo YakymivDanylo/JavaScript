@@ -9,7 +9,8 @@ let season = function (month) {
         return "Літо";
     }else if (month === "Вересень" || month === "Жовтень" || month === "Листопад"){
         return "Осінь";
-    }else {
+    }
+    else {
         return "Місяць року не розпізнано";
     }
 }
