@@ -7,8 +7,7 @@ function diff(a, b) {
 }
 
 function sumOrDiff(a, b) {
-    if (sum(a,b) === 10 || diff(a,b) === 10) return true;
-    else return false;
+    return sum(a, b) === 10 || diff(a, b) === 10;
 }
 
 let a = prompt("Введіть a:","");
