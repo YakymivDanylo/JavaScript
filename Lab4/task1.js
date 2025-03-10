@@ -2,23 +2,23 @@ let array = ["Банан", "Яблуко", "Груша", "Апельсин", "К
 
 function delLastElemArr(arr) {
     arr.splice(arr.length - 1, 1)
-    console.log(arr)
+    console.log("1.1 "+arr)
 }
 
 function addNewElem(arr) {
     let element = prompt("Введіть фрукт, який хочете додати ", "")
     arr.unshift(element)
-    console.log(arr)
+    console.log("1.2 "+arr)
 }
 
 function sortReverseAlphabet(arr) {
     arr.sort((a, b) => b.localeCompare(a))
-    console.log(arr)
+    console.log("1.3 "+arr)
 }
 
 function findApple(arr) {
     for (let i = 0;i<arr.length;i++){
-        if (arr[i].toLowerCase() === "яблуко") console.log(i);
+        if (arr[i].toLowerCase() === "яблуко") console.log("1.4 "+i);
     }
 }
 
