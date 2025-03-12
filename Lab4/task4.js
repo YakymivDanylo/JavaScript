@@ -17,5 +17,17 @@ function addStudent(arr) {
     console.log(arr)
 }
 
+function sortBasedAge(arr) {
+    let result = arr.sort((a,b)=>b.age-a.age)
+    console.log(result)
+}
+
+function findStudentThirdCourse(arr) {
+    let result = arr.filter(std => std.course === 3)
+    console.log(result)
+}
+
 // deleteStudentOleksiy(students)//4.2
-addStudent(students)//4.3
+// addStudent(students)//4.3
+// sortBasedAge(students)//4.4
+// findStudentThirdCourse(students)//4.5
