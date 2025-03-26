@@ -5,7 +5,7 @@ function resetTimer() {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
         lamp.classList.remove('on');
-    }, 300000); // 5 хвилин
+    }, 3000); // 3 секунди
 }
 
 function toggleLamp() {
@@ -18,7 +18,9 @@ function changeLampType() {
     let currentColor = lamp.style.backgroundColor;
     let newIndex = (types.indexOf(currentColor)+1)%types.length;
     lamp.style.backgroundColor = types[newIndex];
-    resetTimer()
+    if (lamp.classList.contains('on')) {
+        resetTimer();
+    }
 }
 
 function setBrightness() {
