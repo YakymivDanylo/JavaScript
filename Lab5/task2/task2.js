@@ -4,7 +4,7 @@ let lightGreen = document.getElementById('lightGreen');
 
 let states = [{light: lightRed, time:5000},
     {light:lightYellow, time:3000},
-    {light:lightGreen,time:7000}];
+    {light:lightGreen,time:7000}, {light: lightYellow, time: 2000}];
 
 let currentIndex = 0;
 
@@ -14,12 +14,15 @@ function changeLight() {
     lightGreen.classList.add('off');
 
     states[currentIndex].light.classList.remove('off');
+    console.log("The color is "+states[currentIndex].light.id + " "+states[currentIndex].time + "ms")
 
     let time = states[currentIndex].time;
 
     currentIndex = (currentIndex + 1) % states.length;
 
     setTimeout(changeLight,time);
+
+
 
 }
 
