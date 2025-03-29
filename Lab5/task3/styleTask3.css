@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #222;
+    color: white;
+}
+
+#clock {
+    font-size: 2em;
+    margin: 20px;
+}
+
+.blink {
+    animation: blink-animation 1s infinite;
+}
+
+@keyframes blink-animation {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    width: 300px;
+    margin: 10px auto;
+}
+
+.day, .empty {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #333;
+    border-radius: 5px;
+}
+
+.day:hover {
+    background: #555;
+    cursor: pointer;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="styleTask3.css">
+    <title>Таймер</title>
+</head>
+<body>
+<h1>Годинник, Таймер, Календар</h1>
+
+<div id="clock"></div>
+
+<h2>Таймер зворотного відліку</h2>
+<input type="datetime-local" id="countdownInput">
+<button id="startCountdown">Запустити таймер</button>
+<div id="countdown"></div>
+
+<h2>Календар</h2>
+<button id="prevMonth">←</button>
+<span id="currentMonth"></span>
+<button id="nextMonth">→</button>
+<div id="calendar" class="calendar"></div>
+
+<h2>День народження</h2>
+<input type="date" id="birthdayInput">
+<button id="birthdayCalc">Порахувати</button>
+<div id="birthdayResult"></div>
+<script src="task3.js"></script>
+</body>
+</html>
