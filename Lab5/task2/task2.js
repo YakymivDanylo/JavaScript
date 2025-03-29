@@ -1,67 +1,80 @@
 let lightRed = document.getElementById('lightRed');
 let lightYellow = document.getElementById('lightYellow');
 let lightGreen = document.getElementById('lightGreen');
+let stateText = document.getElementById('stateText');
+let manualButton = document.getElementById('manualButton');
 
-// Масив із кольорами і часом
+// Отримуємо тривалість для кожного кольору від користувача
+let redTime = parseInt(prompt("Введіть тривалість червоного світла (мс):", "5000")) || 5000;
+let yellowTime = parseInt(prompt("Введіть тривалість жовтого світла (мс):", "3000")) || 3000;
+let greenTime = parseInt(prompt("Введіть тривалість зеленого світла (мс):", "7000")) || 7000;
+let blinkTime = 2000; // Фіксований час миготливого жовтого
+
+// Масив станів світлофора
 let states = [
-    { light: lightRed, time: 5000 },   // Червоний
-    { light: lightYellow, time: 3000 }, // Жовтий перед зеленим
-    { light: lightGreen, time: 7000 },  // Зелений
-    { light: lightYellow, time: 0 }     // Миготливий жовтий (мигає 3 рази, а не фіксований час)
+    { light: lightRed, text: "Червоний", time: redTime },
+    { light: lightYellow, text: "Жовтий", time: yellowTime },
+    { light: lightGreen, text: "Зелений", time: greenTime },
+    { light: lightYellow, text: "Миготливий жовтий", time: 0 }
 ];
 
 let currentIndex = 0;
+let isManual = false; // Чи ввімкнений ручний режим
 
 function changeLight() {
-    // Вимикаємо всі кольори
+    if (isManual) return; // Якщо вручну керуємо - автоматичне перемикання не працює
+
+    resetLights();
+
+    let state = states[currentIndex];
+    state.light.classList.remove('off');
+    stateText.innerText = state.text; // Відображаємо текст
+
+    console.log("The color is " + state.text);
+
+    if (currentIndex === 3) {
+        blinkYellow(3);
+    } else {
+        currentIndex = (currentIndex + 1) % 3;
+        if (currentIndex === 0) currentIndex = 3; // Після зеленого -> миготливий жовтий
+        setTimeout(changeLight, state.time);
+    }
+}
+
+function resetLights() {
     lightRed.classList.add('off');
     lightYellow.classList.add('off');
     lightGreen.classList.add('off');
-
-    // Вмикаємо потрібний колір
-    states[currentIndex].light.classList.remove('off');
-    console.log("The color is " + states[currentIndex].light.id); // Виводимо поточний колір
-
-    // Якщо поточний колір - миготливий жовтий, починаємо миготіння
-    if (states[currentIndex].light === lightYellow && currentIndex === 3) {
-        blinkYellow(3);  // Миготіння жовтого 3 рази
-        return;  // Зупиняємо подальше виконання цього циклу
-    }
-
-    // Якщо це не миготливий жовтий, переходимо до наступного кольору
-    let time = states[currentIndex].time;
-
-    // Якщо ми на миготливому жовтому, то час ми не задаємо — воно залежить від кількості мигань
-    if (states[currentIndex].light === lightYellow && currentIndex === 3) {
-        return; // Миготливий жовтий ми обробляємо окремо
-    }
-
-    // Оновлюємо індекс (перехід на наступний колір)
-    currentIndex = (currentIndex + 1) % 3; // Переходимо через три кольори (червоний, жовтий, зелений)
-    if (currentIndex === 0) {
-        currentIndex = 3; // Після зеленого переходимо до миготливого жовтого
-    }
-
-    // Викликаємо функцію знову через певний час
-    setTimeout(changeLight, time);
 }
 
 function blinkYellow(times) {
     let blinkCount = 0;
     let interval = setInterval(() => {
-        lightYellow.classList.toggle('off'); // Перемикаємо жовтий
+        lightYellow.classList.toggle('off');
         blinkCount++;
 
-        if (blinkCount === times * 2) {  // Миготить 3 рази (тобто 6 перемикань)
-            clearInterval(interval);  // Зупиняємо миготіння
+        if (blinkCount === times * 2) {
+            clearInterval(interval);
             setTimeout(() => {
-                // Після миготливого жовтого, повертаємося до червоного
                 currentIndex = 0;
                 changeLight();
-            }, 1000); // Чекаємо 1 сек перед поверненням до червоного
+            }, 1000);
         }
-    }, 500); // Миготить кожні 500 мс
+    }, 500);
+}
+
+// Функція для ручного перемикання станів
+function manualSwitch() {
+    isManual = true; // Вимикаємо автоматичний режим
+    resetLights();
+
+    currentIndex = (currentIndex + 1) % states.length;
+    states[currentIndex].light.classList.remove('off');
+    stateText.innerText = states[currentIndex].text;
 }
 
 // Запускаємо світлофор
 changeLight();
+
+// Прив'язуємо кнопку для ручного перемикання
+manualButton.addEventListener('click', manualSwitch);
