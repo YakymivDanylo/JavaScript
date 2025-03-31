@@ -27,7 +27,7 @@ body {
     height: 60px;
     border-radius: 50%;
     background-color: #444;
-    transition: background-color 0.3s ease-in-out; /* Анімація зміни кольору */
+    transition: background-color 0.3s ease-in-out;
 }
 
 .red {

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Оновлення цифрового годинника
+
     function updateClock() {
         let now = new Date();
         let hours = String(now.getHours()).padStart(2, "0");
@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Таймер зворотного відліку
     document.getElementById("startCountdown").addEventListener("click", function () {
         let targetDate = new Date(document.getElementById("countdownInput").value);
         let countdownDisplay = document.getElementById("countdown");
@@ -36,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
         updateCountdown();
     });
 
-    // Календар
+
     function renderCalendar(year, month) {
         let calendar = document.getElementById("calendar");
         let firstDay = new Date(year, month, 1).getDay();
@@ -79,7 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
         renderCalendar(currentYear, currentMonth);
     });
 
-    // Підрахунок часу до дня народження
     document.getElementById("birthdayCalc").addEventListener("click", function () {
         let birthDate = new Date(document.getElementById("birthdayInput").value);
         let now = new Date();

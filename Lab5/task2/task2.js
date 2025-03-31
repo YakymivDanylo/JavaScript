@@ -4,13 +4,11 @@ let lightGreen = document.getElementById('lightGreen');
 let stateText = document.getElementById('stateText');
 let manualButton = document.getElementById('manualButton');
 
-// Отримуємо тривалість для кожного кольору від користувача
 let redTime = parseInt(prompt("Введіть тривалість червоного світла (мс):", "5000")) || 5000;
 let yellowTime = parseInt(prompt("Введіть тривалість жовтого світла (мс):", "3000")) || 3000;
 let greenTime = parseInt(prompt("Введіть тривалість зеленого світла (мс):", "7000")) || 7000;
-let blinkTime = 2000; // Фіксований час миготливого жовтого
+let blinkTime = 2000;
 
-// Масив станів світлофора
 let states = [
     { light: lightRed, text: "Червоний", time: redTime },
     { light: lightYellow, text: "Жовтий", time: yellowTime },
@@ -19,16 +17,16 @@ let states = [
 ];
 
 let currentIndex = 0;
-let isManual = false; // Чи ввімкнений ручний режим
+let isManual = false;
 
 function changeLight() {
-    if (isManual) return; // Якщо вручну керуємо - автоматичне перемикання не працює
+    if (isManual) return;
 
     resetLights();
 
     let state = states[currentIndex];
     state.light.classList.remove('off');
-    stateText.innerText = state.text; // Відображаємо текст
+    stateText.innerText = state.text;
 
     console.log("The color is " + state.text);
 
@@ -36,7 +34,7 @@ function changeLight() {
         blinkYellow(3);
     } else {
         currentIndex = (currentIndex + 1) % 3;
-        if (currentIndex === 0) currentIndex = 3; // Після зеленого -> миготливий жовтий
+        if (currentIndex === 0) currentIndex = 3;
         setTimeout(changeLight, state.time);
     }
 }
@@ -63,9 +61,8 @@ function blinkYellow(times) {
     }, 500);
 }
 
-// Функція для ручного перемикання станів
 function manualSwitch() {
-    isManual = true; // Вимикаємо автоматичний режим
+    isManual = true;
     resetLights();
 
     currentIndex = (currentIndex + 1) % states.length;
@@ -73,8 +70,6 @@ function manualSwitch() {
     stateText.innerText = states[currentIndex].text;
 }
 
-// Запускаємо світлофор
 changeLight();
 
-// Прив'язуємо кнопку для ручного перемикання
 manualButton.addEventListener('click', manualSwitch);

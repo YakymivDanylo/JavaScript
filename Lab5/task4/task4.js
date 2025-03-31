@@ -1,13 +1,11 @@
 // Головні структури даних
-const products = new Map(); // ID → {name, price, stock}
-const orders = new Set(); // Унікальні замовлення
-const productHistory = new WeakMap(); // Історія змін
-const users = new WeakSet(); // Всі користувачі
+const products = new Map();
+const orders = new Set();
+const productHistory = new WeakMap();
+const users = new WeakSet();
 
-// Функція для створення унікального ID
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
-// Додавання нового продукту
 function addProduct(name, price, stock) {
     const id = generateId();
     const product = { name, price, stock };
@@ -19,7 +17,6 @@ function addProduct(name, price, stock) {
     return id;
 }
 
-// Видалення продукту за ID
 function removeProduct(id) {
     if (products.has(id)) {
         products.delete(id);
@@ -29,7 +26,6 @@ function removeProduct(id) {
     }
 }
 
-// Оновлення інформації про продукт
 function updateProduct(id, newPrice, newStock) {
     if (products.has(id)) {
         let product = products.get(id);
@@ -43,7 +39,6 @@ function updateProduct(id, newPrice, newStock) {
     }
 }
 
-// Пошук продукту за назвою
 function findProduct(name) {
     for (let [id, product] of products.entries()) {
         if (product.name.toLowerCase() === name.toLowerCase()) {
@@ -55,7 +50,6 @@ function findProduct(name) {
     return null;
 }
 
-// Оформлення замовлення
 function placeOrder(user, productId, quantity) {
     if (!products.has(productId)) {
         console.log(`⚠ Продукт не знайдено.`);
@@ -75,7 +69,6 @@ function placeOrder(user, productId, quantity) {
     console.log(`🛒 Замовлення оформлено: ${user.name} купив(ла) ${quantity}x ${product.name}.`);
 }
 
-// Виведення всіх продуктів
 function showProducts() {
     console.log("📦 Каталог продуктів:");
     for (let [id, product] of products.entries()) {
@@ -83,7 +76,6 @@ function showProducts() {
     }
 }
 
-// 🛍 Тестування програми
 const user1 = { name: "Іван" };
 const user2 = { name: "Марія" };
 

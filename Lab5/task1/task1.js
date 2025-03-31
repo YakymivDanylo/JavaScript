@@ -5,7 +5,7 @@ function resetTimer() {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
         lamp.classList.remove('on');
-    }, 3000); // 3 секунди
+    }, 3000);
 }
 
 function toggleLamp() {
@@ -16,7 +16,7 @@ function toggleLamp() {
 function changeLampType() {
     const types = ['gray','yellow','blue','green'];
     let currentColor = lamp.style.backgroundColor;
-    let newIndex = (types.indexOf(currentColor)+1)%types.length;
+    let newIndex = (types.indexOf(currentColor)+1)%types.length;// унеможливлюємо вихід за межі масиву
     lamp.style.backgroundColor = types[newIndex];
     if (lamp.classList.contains('on')) {
         resetTimer();
