@@ -1,0 +1,101 @@
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #f0f4f8;
+    margin: 0;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    max-width: 600px;
+    width: 100%;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.sort-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    form {
+        flex-direction: column;
+    }
+}
