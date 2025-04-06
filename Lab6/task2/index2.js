@@ -1,92 +1,86 @@
-const taskForm = document.getElementById("task-form");
-const taskInput = document.getElementById("task-input");
-const taskList = document.getElementById("task-list");
+const taskInput = document.getElementById('taskInput');
+const addTaskButton = document.getElementById('addTaskButton');
+const taskList = document.getElementById('taskList');
 
-let tasks = [];
+const createTaskElement = (taskText, id) => {
+    const li = document.createElement('li');
+    li.setAttribute('data-id', id);
 
-const createTask = (text) => ({
-    id: Date.now(),
-    text,
-    completed: false,
-    createdAt: Date.now(),
-    updatedAt: Date.now()
-});
+    const text = document.createElement('span');
+    text.textContent = taskText;
+    li.appendChild(text);
 
-const renderTasks = (list) => {
-    taskList.innerHTML = "";
-    list.forEach((task) => {
-        const li = document.createElement("li");
 
-        const textSpan = document.createElement("span");
-        textSpan.textContent = task.text;
-        textSpan.className = task.completed ? "completed" : "";
-        textSpan.contentEditable = true;
-        textSpan.addEventListener("blur", () => editTask(task.id, textSpan.textContent));
+    li.addEventListener('click', () => {
+        li.classList.toggle('completed');
+        updateTaskStatus(id, li.classList.contains('completed'));
+    });
 
-        textSpan.onclick = () => toggleComplete(task.id);
 
-        const controls = document.createElement("div");
-        controls.className = "controls";
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Видалити';
+    deleteButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        deleteTask(id);
+    });
 
-        const delBtn = document.createElement("button");
-        delBtn.textContent = "Видалити";
-        delBtn.onclick = () => deleteTask(task.id);
+    li.appendChild(deleteButton);
+    return li;
+};
 
-        controls.appendChild(delBtn);
 
-        li.appendChild(textSpan);
-        li.appendChild(controls);
-        taskList.appendChild(li);
+const addTask = (taskText) => {
+    const taskId = Date.now();
+    const taskElement = createTaskElement(taskText, taskId);
+    taskList.appendChild(taskElement);
+    saveTaskToLocalStorage(taskText, taskId);
+    taskInput.value = '';
+};
+
+
+const saveTaskToLocalStorage = (taskText, taskId) => {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks.push({ text: taskText, id: taskId, completed: false });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+};
+
+
+const loadTasks = () => {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks.forEach(task => {
+        const taskElement = createTaskElement(task.text, task.id);
+        if (task.completed) {
+            taskElement.classList.add('completed');
+        }
+        taskList.appendChild(taskElement);
     });
 };
 
-const addTask = (e) => {
-    e.preventDefault();
-    const text = taskInput.value.trim();
-    if (!text) return;
-
-    tasks = [...tasks, createTask(text)];
-    taskInput.value = "";
-    renderTasks(tasks);
-};
 
 const deleteTask = (id) => {
-    tasks = tasks.filter((task) => task.id !== id);
-    renderTasks(tasks);
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const filteredTasks = tasks.filter(task => task.id !== id);
+    localStorage.setItem('tasks', JSON.stringify(filteredTasks));
+    taskList.querySelector(`[data-id="${id}"]`).remove();
 };
 
-const editTask = (id, newText) => {
-    tasks = tasks.map((task) =>
-        task.id === id
-            ? { ...task, text: newText.trim(), updatedAt: Date.now() }
-            : task
-    );
-    renderTasks(tasks);
-};
 
-const toggleComplete = (id) => {
-    tasks = tasks.map((task) =>
-        task.id === id
-            ? { ...task, completed: !task.completed, updatedAt: Date.now() }
-            : task
-    );
-    renderTasks(tasks);
-};
-
-const sortTasks = (criteria) => {
-    const sorted = [...tasks];
-    switch (criteria) {
-        case "created":
-            sorted.sort((a, b) => a.createdAt - b.createdAt);
-            break;
-        case "completed":
-            sorted.sort((a, b) => a.completed - b.completed);
-            break;
-        case "updated":
-            sorted.sort((a, b) => b.updatedAt - a.updatedAt);
-            break;
+const updateTaskStatus = (id, completed) => {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const taskIndex = tasks.findIndex(task => task.id === id);
+    if (taskIndex !== -1) {
+        tasks[taskIndex].completed = completed;
+        localStorage.setItem('tasks', JSON.stringify(tasks));
     }
-    renderTasks(sorted);
 };
 
-taskForm.addEventListener("submit", addTask);
+
+addTaskButton.addEventListener('click', () => {
+    const taskText = taskInput.value.trim();
+    if (taskText) {
+        addTask(taskText);
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', loadTasks);

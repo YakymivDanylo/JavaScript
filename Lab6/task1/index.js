@@ -20,11 +20,12 @@ productForm.onsubmit = (e) => {
         id,
         name: data.get('name'),
         price: parseFloat(data.get('price')),
-        category: data.get('category'),
+        category: data.get('category').trim(),
         image: data.get('image'),
         created: new Date(),
         updated: new Date()
     };
+
     const existingIndex = products.findIndex(p => p.id === id);
     if (existingIndex !== -1) {
         product.created = products[existingIndex].created;
@@ -67,10 +68,21 @@ const deleteProduct = (id) => {
     showToast('Товар видалено');
 };
 
+const editProduct = (id) => {
+    const product = products.find(p => p.id === id);
+    if (product) openModal(product);
+};
+
 const render = () => {
     productList.innerHTML = '';
     let items = [...products];
-    if (filteredCategory) items = items.filter(p => p.category === filteredCategory);
+
+    if (filteredCategory) {
+        items = items.filter(p =>
+            p.category.trim().toLowerCase() === filteredCategory.trim().toLowerCase()
+        );
+    }
+
     if (sortKey) {
         items.sort((a, b) => {
             if (sortKey === 'price') return a.price - b.price;
@@ -78,6 +90,7 @@ const render = () => {
             if (sortKey === 'updated') return new Date(a.updated) - new Date(b.updated);
         });
     }
+
     if (items.length === 0) {
         emptyMessage.style.display = 'block';
     } else {
@@ -86,19 +99,20 @@ const render = () => {
             const card = document.createElement('div');
             card.className = 'product-card';
             card.innerHTML = `
-            <img src="${p.image}" alt="${p.name}">
-            <div><strong>ID:</strong> ${p.id}</div>
-            <div><strong>Назва:</strong> ${p.name}</div>
-            <div><strong>Ціна:</strong> ${p.price} грн</div>
-            <div><strong>Категорія:</strong> ${p.category}</div>
-            <div class="actions">
-              <button class="edit-btn" onclick='openModal(${JSON.stringify(p)})'>Редагувати</button>
-              <button class="delete-btn" onclick='deleteProduct("${p.id}")'>Видалити</button>
-            </div>
-          `;
+                <img src="${p.image}" alt="${p.name}">
+                <div><strong>ID:</strong> ${p.id}</div>
+                <div><strong>Назва:</strong> ${p.name}</div>
+                <div><strong>Ціна:</strong> ${p.price} грн</div>
+                <div><strong>Категорія:</strong> ${p.category}</div>
+                <div class="actions">
+                    <button class="edit-btn" onclick='editProduct("${p.id}")'>Редагувати</button>
+                    <button class="delete-btn" onclick='deleteProduct("${p.id}")'>Видалити</button>
+                </div>
+            `;
             productList.appendChild(card);
         });
     }
+
     renderTotal();
     renderFilters();
 };
@@ -109,18 +123,26 @@ const renderTotal = () => {
 };
 
 const renderFilters = () => {
-    const categories = [...new Set(products.map(p => p.category))];
+    const categories = [...new Set(products.map(p => p.category.trim()))];
     filterContainer.innerHTML = '';
+
     categories.forEach(cat => {
         const btn = document.createElement('button');
         btn.textContent = cat;
-        btn.onclick = () => { filteredCategory = cat; render(); };
+        btn.onclick = () => {
+            filteredCategory = cat;
+            render();
+        };
         filterContainer.appendChild(btn);
     });
+
     if (categories.length > 0) {
         const reset = document.createElement('button');
         reset.textContent = 'Скинути фільтр';
-        reset.onclick = () => { filteredCategory = null; render(); };
+        reset.onclick = () => {
+            filteredCategory = null;
+            render();
+        };
         filterContainer.appendChild(reset);
     }
 };
@@ -136,5 +158,3 @@ const resetSort = () => {
 };
 
 render();
-
-

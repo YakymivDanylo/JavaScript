@@ -1,26 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <title>To Do List</title>
-  <link rel="stylesheet" type="text/css" href="style2.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Список Завдань</title>
+  <link rel="stylesheet" href="style2.css">
 </head>
 <body>
 <div class="container">
-  <h1>Список Завдань</h1>
-  <form id="task-form">
-    <input type="text" id="task-input" placeholder="Нове завдання..." required />
-    <button type="submit">Додати</button>
-  </form>
-
-  <div class="sort-controls">
-    <button onclick="sortTasks('created')">Сортувати за датою створення</button>
-    <button onclick="sortTasks('completed')">Сортувати за станом</button>
-    <button onclick="sortTasks('updated')">Сортувати за оновленням</button>
+  <h1>Мій список завдань</h1>
+  <div class="add-task">
+    <input type="text" id="taskInput" placeholder="Додайте нове завдання" required>
+    <button id="addTaskButton">Додати</button>
   </div>
-
-  <ul id="task-list"></ul>
+  <ul id="taskList"></ul>
 </div>
+
 <script src="index2.js"></script>
 </body>
 </html>
