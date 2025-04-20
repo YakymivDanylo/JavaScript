@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="kanban-style.css">
+    <title>Kanban</title>
+</head>
+<body>
+<h1>Kanban Board</h1>
+
+<div class="board">
+  <div class="column" id="todo">
+    <div class="column-header">To Do</div>
+    <div class="task" draggable="true" data-task-id="1">
+      <div class="task-title">Design homepage</div>
+      <div class="task-description">Create wireframes for the new homepage layout</div>
+      <span class="task-priority high">High</span>
+    </div>
+    <div class="task" draggable="true" data-task-id="2">
+      <div class="task-title">Research competitors</div>
+      <div class="task-description">Analyze 5 competitor websites for features</div>
+      <span class="task-priority medium">Medium</span>
+    </div>
+  </div>
+
+  <div class="column" id="in-progress">
+    <div class="column-header">In Progress</div>
+    <div class="task" draggable="true" data-task-id="3">
+      <div class="task-title">Implement user auth</div>
+      <div class="task-description">Set up login and registration system</div>
+      <span class="task-priority high">High</span>
+    </div>
+  </div>
+
+  <div class="column" id="done">
+    <div class="column-header">Done</div>
+    <div class="task" draggable="true" data-task-id="4">
+      <div class="task-title">Project setup</div>
+      <div class="task-description">Initialize repository and basic project structure</div>
+      <span class="task-priority low">Low</span>
+    </div>
+  </div>
+</div>
+
+<script src="index-kanban.js"></script>
+</body>
+</html>
