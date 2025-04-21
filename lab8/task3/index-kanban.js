@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let draggedTask = null;
 
-    // Add event listeners for drag start
     tasks.forEach(task => {
         task.addEventListener('dragstart', () => {
             draggedTask = task;
@@ -19,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Add event listeners for columns
     columns.forEach(column => {
         column.addEventListener('dragover', e => {
             e.preventDefault();
@@ -35,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
             column.classList.remove('dropzone');
 
             if (draggedTask) {
-                // Check if we're dropping on another task
                 const afterElement = getDragAfterElement(column, e.clientY);
 
                 if (afterElement) {
@@ -47,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Helper function to determine where to place the dragged task
+
     function getDragAfterElement(column, y) {
         const draggableElements = [...column.querySelectorAll('.task:not(.dragging)')];
 
